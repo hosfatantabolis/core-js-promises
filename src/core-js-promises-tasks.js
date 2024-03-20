@@ -51,12 +51,12 @@ function getPromiseResult(/* source */) {
  * [Promise.reject(1), Promise.reject(2), Promise.reject(3)]    => Promise rejected
  */
 function getFirstResolvedPromiseResult(promises) {
-  const promise = Promise.race(promises)
+  const promise = Promise.any(promises)
     .then((value) => {
       return Promise.resolve(value);
     })
-    .catch(() => {
-      return Promise.reject();
+    .catch((err) => {
+      return Promise.resolve(err);
     });
 
   return promise;
